@@ -8,16 +8,23 @@ class UserHeader extends React.Component {
   }
 
   render(){
-    return (
-      <div></div>
+    const { user }  = this.props;
 
-      // want to call an Action creator inside of above that will fetch
-      //the correct user
+    if (!user) {
+      return null;
+    }
+
+    return (
+      <div className="header">{user.name}</div>
       );
   }
 };
 
-export default connect(null, { fetchUser })(UserHeader);
+const mapStateToProps = (state, ownProps) => {
+  return { user: state.users.find(user => user.id === ownProps.userId ) };
+};
+
+export default connect(mapStateToProps, { fetchUser })(UserHeader);
 
 
 
